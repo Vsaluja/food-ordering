@@ -1,0 +1,97 @@
+# Python bytecode files
+**/*.py[cod]
+**/__pycache__/
+
+# Virtual environment directories
+**/venv/
+**/env/
+**/.venv/
+**/myenv/
+
+# Django stuff
+**/*.log
+**/*.pot
+**/*.pyc
+**/db.sqlite3
+**/db.sqlite3-journal
+**/media/
+**/static/
+**/*.svg
+**/*.tar.gz
+**/*.tmp
+**/.env
+
+# If you have a 'local_settings.py' or similar configuration file
+**/local_settings.py
+
+# Python egg files
+**/*.egg
+**/*.egg-info/
+**/dist/
+**/build/
+**/eggs/
+**/parts/
+**/var/
+**/*.mo
+**/*.pot
+
+# Installer logs
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+**/htmlcov/
+**/.tox/
+**/.coverage
+**/.coverage.*
+**/.cache
+**/nosetests.xml
+**/coverage.xml
+**/*.cover
+**/.hypothesis/
+**/.pytest_cache/
+
+# Translations
+**/*.mo
+
+# Documentation
+**/docs/_build/
+
+# Distribution / packaging
+**/.Python
+**/build/
+**/develop-eggs/
+**/dist/
+**/downloads/
+**/eggs/
+**/.eggs/
+**/lib/
+**/lib64/
+**/parts/
+**/sdist/
+**/var/
+**/wheels/
+**/*.egg-info/
+**/.installed.cfg
+**/*.egg
+
+# PyCharm specific
+**/.idea/
+**/*.iml
+**/*.iws
+**/.idea/
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/gradle.xml
+**/.idea/dictionaries
+**/.idea/libraries
+**/.idea/jsLibraryMappings.xml
+
+# VSCode specific
+**/.vscode/
+
+# macOS specific
+**/.DS_Store
+
+# Windows specific
+**/Thumbs.db
