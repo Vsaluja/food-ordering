@@ -9,7 +9,7 @@ class CategoriesSerializer(serializers.ModelSerializer):
         fields = ['id', 'category_name', 'category_image']
         extra_kwargs = {
             'category_name': {
-                'write_only': True
+                'required': True
             },
             'category_image': {
                 'required': True
@@ -21,10 +21,10 @@ class ProductsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Products
-        fields = ['id', 'name', 'description', 'size', 'price', 'category_id']
+        fields = ['id', 'name', 'description', 'size', 'price', 'category']
         extra_kwargs = {
             'name': {
-                'write_only': True
+                'required': True
             },
             'description': {
                 'required': True
@@ -32,10 +32,7 @@ class ProductsSerializer(serializers.ModelSerializer):
             'price': {
                 'required': True
             },
-            # 'size': {
-            #     'required': False
-            # },
-            'category_id': {
-                'required': True
-            }
+            # 'category': {
+            #     'required': True
+            # }
         }

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import UserRegisterView, LoginView, UserCartView
-from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
 
 urlpatterns = [
     path('api/user/register/', UserRegisterView.as_view()),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('api/token/refresh/',
          TokenRefreshView.as_view(),
          name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/cart/', UserCartView.as_view())
 ]
