@@ -19,9 +19,6 @@ class UserModelSerializer(serializers.ModelSerializer):
             },
             'first_name': {
                 'required': True
-            },
-            'last_name': {
-                'required': True
             }
         }
 

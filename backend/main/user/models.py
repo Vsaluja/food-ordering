@@ -43,8 +43,9 @@ class UserModel(AbstractUser):
                                 unique=False,
                                 blank=True,
                                 null=True)
+    password = models.CharField(max_length=150, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=False)
-    last_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=True)
     image = models.CharField(
         max_length=1000,
         default=
