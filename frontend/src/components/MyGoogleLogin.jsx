@@ -5,10 +5,13 @@ import axios from 'axios';
 import { setUser } from '@/app/store/users';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 const MyGoogleLogin = () => {
 
     const dispatch = useDispatch();
+    const router = useRouter();
+
     const handleOAuthLogin = async (response) => {
         const credential = response.credential;
 
@@ -30,7 +33,7 @@ const MyGoogleLogin = () => {
             dispatch(setUser(authenticatedUser))
             Cookies.set("access", response.data.tokens.access)
             Cookies.set("refresh", response.data.tokens.refresh)
-
+            router.push('/')
 
         } catch (error) {
             console.log("Error while verifying information in OAuth");

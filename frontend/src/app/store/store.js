@@ -1,12 +1,12 @@
 'use client'
 import { configureStore } from '@reduxjs/toolkit'
-import ProductsSlice from './products'
 import UserSlice from './users'
+import CategorySlice from './Category'
 
 export const store = configureStore({
     reducer: {
         // auth: AuthSlice,
-        products: ProductsSlice,
+        categories: CategorySlice,
         user: UserSlice
     }
 })

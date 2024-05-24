@@ -15,6 +15,7 @@ class Categories(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=500, blank=False)
+    image = models.CharField(max_length=1000)
     price = models.CharField(max_length=6, blank=False)
     size = models.CharField(max_length=2, blank=True, null=True, default=None)
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)

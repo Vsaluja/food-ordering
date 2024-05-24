@@ -1,15 +1,14 @@
 'use client'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProducts } from '@/app/store/products';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { setUser } from '@/app/store/users';
+import { setCategories, setProducts } from '@/app/store/Category';
 
 const FetchOnLoad = () => {
     // This component is designed to only fetch the data when the application loads the first time it will fetch all the necessary data required and put it inside global states 
     const dispatch = useDispatch();
-
 
     const fetchUserDataAccess = async () => {
         const accessToken = Cookies.get('access');
@@ -67,15 +66,32 @@ const FetchOnLoad = () => {
 
 
     const fetchCategories = async () => {
-        const response = await axios.get('http://127.0.0.1:8000/rest/categories/')
-        let all = { category_name: "All", category_image: "https://i.postimg.cc/fyxMJL7T/Screenshot-290-removebg-preview.png" }
-        response.data.unshift(all)
-        dispatch(setProducts(response.data))
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rest/categories/`)
+            let all = { id: 0, category_name: "All", category_image: "https://i.postimg.cc/fyxMJL7T/Screenshot-290-removebg-preview.png" }
+            response.data.unshift(all)
+            dispatch(setCategories(response.data))
+
+        } catch (error) {
+            console.log("Could not fetch categories data");
+        }
     }
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rest/products/`)
+            dispatch(setProducts(response.data))
+
+        } catch (error) {
+            console.log("Could not fetch products data");
+        }
+    }
+
+
 
     useEffect(() => {
         fetchUserDataAccess();
         fetchCategories();
+        fetchProducts();
     }, [])
 }
 

@@ -9,11 +9,13 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../store/users';
 import MyGoogleLogin from '@/components/MyGoogleLogin';
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const router = useRouter();
 
     const dispatch = useDispatch();
 
@@ -36,6 +38,7 @@ const Login = () => {
                 dispatch(setUser(authenticatedUser))
                 Cookies.set("access", response.data.tokens.access)
                 Cookies.set("refresh", response.data.tokens.refresh)
+                router.push('/')
             }
 
 

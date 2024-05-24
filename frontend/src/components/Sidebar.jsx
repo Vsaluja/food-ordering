@@ -28,7 +28,7 @@ const Sidebar = () => {
                         <img className='w-[160px] h-[160px] rounded-full border-[4px] border-[#313043]' src={user.user.image} alt="" />
                     </div>
                     <div>
-                        <h2 className='font-bold capitalize text-[#313043]'>Welcome Back, {user.user.first_name}</h2>
+                        <h2 className='font-bold capitalize text-[#313043] text-[18px]'>Welcome Back, {user.user.first_name}</h2>
                     </div>
 
                     <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3  font-bold rounded text-white cursor-pointer w-full max-w-[130px]'>

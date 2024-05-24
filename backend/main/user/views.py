@@ -72,6 +72,8 @@ class OAuthLogin(APIView):
             UserModel = get_user_model()
 
             # If user is there then its data will get stored in user variable if hes not there then will be created and his data will get stored in user variable
+            # user will contain the retrieved or created UserModel object.
+            # created will be a boolean value indicating whether the object was created (True) or retrieved from the database (False).
             user, created = UserModel.objects.get_or_create(
                 email=email, defaults={'first_name': first_name})
 
