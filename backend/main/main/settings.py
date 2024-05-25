@@ -57,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.static.StaticFilesMiddleware',
 ]
 
 CSRF_TRUSTED_ORIGINS = ['https://food-ordering-production.up.railway.app']
@@ -183,8 +182,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-# Changed to /static/ from static/ because its deployed now
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+STAICFILES_DIRS = [BASE_DIR / 'staticfiles']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
