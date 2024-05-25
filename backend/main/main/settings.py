@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -57,13 +59,15 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://food-ordering-production.up.railway.app/']
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # Add more authentication classes as needed
         'rest_framework_simplejwt.authentication.JWTAuthentication', ),
-    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', )
+    # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', )
 }
 
 SIMPLE_JWT = {
