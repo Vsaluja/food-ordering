@@ -12,3 +12,4 @@ django-cors-headers
 requests
 simple-jwt-decode
 gunicorn
+whitenoise
