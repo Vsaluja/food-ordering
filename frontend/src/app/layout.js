@@ -3,6 +3,8 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import 'tailwindcss/tailwind.css';
 import StoreProvider from "./store/StoreProvider";
 import FetchOnLoad from "@/components/FetchOnLoad";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -21,6 +23,18 @@ export default function RootLayout({ children }) {
       <body >
         <StoreProvider>
           <FetchOnLoad />
+          <ToastContainer
+          position="bottom-center"
+          autoClose={1500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          />
           <GoogleOAuthProvider clientId="1060783146858-acnr84t6i0lt0u67qsjttof23gh7vuus.apps.googleusercontent.com">
             {/* <Navbar /> */}
             {children}

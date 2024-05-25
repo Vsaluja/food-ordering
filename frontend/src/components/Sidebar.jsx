@@ -8,7 +8,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import Cookies from 'js-cookie';
 import { setUser } from '@/app/store/users';
-
+import { toast } from 'react-toastify';
 
 
 const Sidebar = () => {
@@ -18,6 +18,8 @@ const Sidebar = () => {
         Cookies.set("access", "")
         Cookies.set("refresh", "")
         dispatch(setUser(""))
+        toast.success("Logged out successfully!")
+        
     }
 
     return (

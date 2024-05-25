@@ -3,10 +3,12 @@ import { lilita } from '@/fonts/fonts';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FaPlus } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
 
 
 const Products = ({ category }) => {
-
+    
+    const router = useRouter();
     const { products } = useSelector((state) => state.categories);
     const [filterProducts, setFilterProducts] = useState([]);
     const filterProductsByCategory = () => {
@@ -29,13 +31,13 @@ const Products = ({ category }) => {
 
 
     return (
-        <div className='my-10 flex flex-wrap gap-6 items-center justify-center'>
+        <div className='my-10 px-2 flex flex-wrap gap-6 items-center justify-center'>
             {
                 filterProducts && filterProducts.map((product) => {
                     return (
-                        <div key={product.id} className='product bg-[#F4F5F7] w-[200px] min-h-[200px] flex flex-col  justify-evenly  py-2 px-2 rounded-2xl gap-2 my-6'>
+                        <div key={product.id} className='product bg-[#F4F5F7] w-[200px] h-[270px] flex flex-col  justify-evenly  py-2 px-2 rounded-2xl gap-2 my-6 cursor-pointer duration-300 hover:translate-y-[-20px] border-2 border-transparent hover:border-2 hover:border-[#F87192]' onClick={()=> router.push(`/product/${product.id}`)}>
                             <div className='flex justify-center'>
-                                <img className='w-[100px] h-[80px]' src={product.image} alt="" />
+                                <img className='w-[100px] h-[100px]' src={product.image} alt="" />
                             </div>
                             <h2 className={`${lilita.className} text-[#313043] text-[17px] tracking-widest capitalize font-bold text-center`}>{product.name}</h2>
                             <p className='description capitalize text-[#313043] text-center' style={{

@@ -10,6 +10,7 @@ import { setUser } from '../store/users';
 import MyGoogleLogin from '@/components/MyGoogleLogin';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -39,10 +40,12 @@ const Login = () => {
                 Cookies.set("access", response.data.tokens.access)
                 Cookies.set("refresh", response.data.tokens.refresh)
                 router.push('/')
+                toast.success("Logged in successfully!")
             }
-
-
+            
+            
         } catch (error) {
+            toast.error("Incorrect credentials, Try again!")
             console.log("Error", error);
         }
 

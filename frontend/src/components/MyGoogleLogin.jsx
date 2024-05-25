@@ -6,6 +6,7 @@ import { setUser } from '@/app/store/users';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const MyGoogleLogin = () => {
 
@@ -34,8 +35,10 @@ const MyGoogleLogin = () => {
             Cookies.set("access", response.data.tokens.access)
             Cookies.set("refresh", response.data.tokens.refresh)
             router.push('/')
-
+            toast.success("Logged in successfully!")
+            
         } catch (error) {
+            toast.error("Incorrect credentials, Try again!")
             console.log("Error while verifying information in OAuth");
         }
 
@@ -45,7 +48,7 @@ const MyGoogleLogin = () => {
     return (
         <div>
             <GoogleLogin
-                onSuccess={(credentialResponse) => { handleOAuthLogin(credentialResponse) }}
+                onSuccess={(credentialResponse) => { handleOAuthLogin(credentialResponse)}}
                 onError={() => {
                     console.log('Login Failed');
                 }}
