@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://food-ordering-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://food-ordering-production.up.railway.app']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
