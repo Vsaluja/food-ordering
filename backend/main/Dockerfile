@@ -40,4 +40,4 @@ COPY . .
 EXPOSE 8000
 
 # Command to run the Gunicorn server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.main.main.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "main.wsgi:application"]
