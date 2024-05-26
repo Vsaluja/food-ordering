@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
           pauseOnHover
           theme="dark"
           />
-          <GoogleOAuthProvider clientId="1060783146858-acnr84t6i0lt0u67qsjttof23gh7vuus.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_OAUTH_CLIENTID}>
             {/* <Navbar /> */}
             {children}
             {/* <Footer /> */}
