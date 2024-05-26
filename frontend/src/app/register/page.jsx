@@ -48,7 +48,7 @@ const Register = () => {
 
 
     return (
-        <Container className={`flex flex-col flex-1 bg-white m-10 px-2 sm:px-10 rounded-xl`}>
+        <Container className={`flex flex-col flex-1 bg-white m-10 px-4 sm:px-10 rounded-xl`}>
             <Navbar />
             <div className='flex flex-1 my-10 lg:my-4'>
                 <form onSubmit={(e) => handleRegister(e)} className=' flex flex-col gap-6 bg-[#E7F0FD] max-h-[550px] w-full max-w-[400px]  mx-auto py-4 px-6 rounded'>
