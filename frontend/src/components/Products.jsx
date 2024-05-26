@@ -28,14 +28,16 @@ const Products = ({ category }) => {
         }
 
 
-        if(initialLoad){
+        if(initialLoad && products.length > 1){
             setTimeout(() => {  
                 setLoading(false);
                 dispatch(setInitialLoad(false))
             }, 1000);
         }
         else{
-            setLoading(false)
+            if(products.length > 1){
+                setLoading(false)
+            }
         }
         setFilterProducts(filtered);
     };
@@ -47,7 +49,7 @@ const Products = ({ category }) => {
     }, [category, products]);
 
     return (
-        <div className='my-10 flex flex-wrap gap-6 items-center justify-center'>
+        <div className='my-10 flex flex-wrap gap-2 sm:gap-6 items-center justify-center'>
             {
                 loading ? (Array(8).fill(0).map((elem, index) => (<ProductCardShimmer key={index} />))) : (
 

@@ -17,20 +17,24 @@ const HomePage = () => {
     const [loading, setLoading] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState(0);
     const [categoryName, setCategoryName] = useState("All Items");
+    const [mobileView, setMobileView] = useState(false);
 
     useEffect(() => {
         console.log(initialLoad);
-        if(initialLoad){
+        console.log("cat", categories.length);
+        if(initialLoad && categories.length > 1){
             setTimeout(() => {  
                 setLoading(false);
                 dispatch(setInitialLoad(false))
             }, 1000);
         }
         else{
-            setLoading(false)
+            if(categories.length > 1){
+                setLoading(false)
+            }
         }
         
-    }, [categories.category_name])
+    }, [categories])
 
     const handleCategory = (category) => {
 
@@ -46,7 +50,7 @@ const HomePage = () => {
     return (
         <Container className="flex-1 w-full">
             <div className="flex justify-between py-8 gap-2">
-                <div className="left flex w-[75%] flex-col bg-white rounded-xl min-h-[100vh] p-4 ">
+                <div className="left flex w-[100%] md:w-[75%] flex-col bg-white rounded-xl min-h-[100vh] p-2 ">
                     <Navbar />
                     <div className={`flex items-start lg:justify-center overflow-y-auto gap-10 py-2 my-10 min-h-[150px]`}>
                         {loading ? Array(6).fill(0).map((elem, index) => (<CategoryCardShimmer key={index} />)) : (
@@ -60,9 +64,9 @@ const HomePage = () => {
                             </>
                         )}
                     </div>
-                    <div className='py-4 px-10 flex justify-between'>
+                    <div className='py-4 mx-4 sm:px-10 flex justify-between'>
                         <h2 className={`${lilita.className} text-[30px] text-[#313043] capitalize`}>{categoryName}</h2>
-                        <img className='me-10 w-[35px] h-[35px] cursor-pointer' src="./Assets/filter.png" alt="" />
+                        <img className='sm:me-10 w-[35px] h-[35px] cursor-pointer' src="./Assets/filter.png" alt="" />
                     </div>
                     <div className='flex justify-center w-full'>
 
@@ -70,7 +74,7 @@ const HomePage = () => {
                     </div>
 
                 </div>
-                <div className="right w-[25%] max-h-[88vh] bg-white rounded-xl">
+                <div className="right hidden md:block md:w-[25%] max-h-[88vh] bg-white rounded-xl">
                     <Sidebar />
                 </div>
             </div>

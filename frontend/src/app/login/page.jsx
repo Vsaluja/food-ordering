@@ -42,8 +42,8 @@ const Login = () => {
                 router.push('/')
                 toast.success("Logged in successfully!")
             }
-            
-            
+
+
         } catch (error) {
             toast.error("Incorrect credentials, Try again!")
             console.log("Error", error);
@@ -54,15 +54,15 @@ const Login = () => {
 
 
     return (
-        <Container className={`flex flex-col flex-1 bg-white m-10 px-10 rounded-xl`}>
+        <Container className={`flex flex-col flex-1 bg-white m-10 px-4 sm:px-10 rounded-xl`}>
             <Navbar />
             <div className='flex flex-col gap-4 items-center flex-1 my-10 lg:my-4'>
-                <form onSubmit={(e) => handleLogin(e)} className=' flex flex-col gap-6 bg-[#E7F0FD] h-[400px] w-[400px] mx-auto py-4 px-6 rounded'>
+                <form onSubmit={(e) => handleLogin(e)} className=' flex flex-col gap-6 bg-[#E7F0FD] h-[400px]  w-full max-w-[400px] mx-auto py-4 px-2 sm:px-6 rounded'>
                     <h2 className={`${lilita.className} font-bold text-[40px] font-sans mb-2 text-[#313043]`}>Sign In</h2>
                     <input className='border-2 p-2 rounded w-full' type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
                     <input className='border-2 p-2 rounded w-full' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
                     <button className='self-start ms-4 py-2 px-6 bg-[#313043] rounded font-bold text-white  ' type="submit">Sign in</button>
-                    <div className='flex gap-2 text-[#313043] font-bold'>
+                    <div className='flex flex-col text-center sm:flex-row gap-2 text-[#313043] font-bold'>
                         Don't have an account ?
                         <Link className='text-[#F77193]' href={`/register`} >Sign up here</Link>
                     </div>
