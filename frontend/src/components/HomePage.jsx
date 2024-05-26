@@ -23,7 +23,7 @@ const HomePage = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 1500);
+        }, 1200);
     }, [categories])
 
     const handleCategory = (category) => {
