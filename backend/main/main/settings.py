@@ -182,8 +182,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# For rendering static files while deploying using whitenoise
 STATIC_URL = 'static/'
-STATIC_DIRS = [BASE_DIR / 'static']
+STATIC_DIRS = [
+    BASE_DIR / 'static'
+]  # 'static' is the name of the folder that we create manually if we use custom static files like html css js etc but in this project we have not used any custom static file
+# Below staticfiles folder holds django's default static files for admin panel etc
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     # ...
