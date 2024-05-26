@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -137,11 +141,10 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Milkyway',
-        'USER': 'root',
-        'PASSWORD': 'root1234',
-        'HOST':
-        'database-2.cl2mcou0g4qb.us-east-1.rds.amazonaws.com',  # Or your PostgreSQL server's IP address
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),  # Or your PostgreSQL server's IP address
         'PORT': '5432',  # Default PostgreSQL port
     }
 }
