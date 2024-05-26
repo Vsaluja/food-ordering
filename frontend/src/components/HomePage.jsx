@@ -21,10 +21,12 @@ const HomePage = () => {
     const [categoryName, setCategoryName] = useState("All Items");
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 1200);
-    }, [categories])
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
+        
+    }, [categories.category_name])
 
     const handleCategory = (category) => {
 

@@ -19,7 +19,7 @@ const Products = ({ category }) => {
         }
         setTimeout(() => {
             setLoading(false);
-        }, 1200);
+        }, 500);
         setFilterProducts(filtered);
     };
 
