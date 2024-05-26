@@ -25,7 +25,9 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
     }, [user.user])
 
     return (

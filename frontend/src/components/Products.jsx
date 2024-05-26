@@ -17,7 +17,9 @@ const Products = ({ category }) => {
         if (category !== 0) {
             filtered = products?.filter((product) => product.category === category);
         }
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
         setFilterProducts(filtered);
     };
 
