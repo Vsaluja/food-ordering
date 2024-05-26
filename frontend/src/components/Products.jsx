@@ -9,7 +9,7 @@ import { setInitialLoad } from '@/app/store/Category';
 
 const Products = ({ category }) => {
     const router = useRouter();
-    
+
     const dispatch = useDispatch()
 
     const { products } = useSelector((state) => state.categories);
@@ -22,20 +22,20 @@ const Products = ({ category }) => {
 
     const filterProductsByCategory = () => {
         let filtered = products;
-        
+
         if (category !== 0) {
             filtered = products?.filter((product) => product.category === category);
         }
 
 
-        if(initialLoad && products.length > 1){
-            setTimeout(() => {  
+        if (initialLoad && products.length > 1) {
+            setTimeout(() => {
                 setLoading(false);
                 dispatch(setInitialLoad(false))
             }, 1000);
         }
-        else{
-            if(products.length > 1){
+        else {
+            if (products.length > 1) {
                 setLoading(false)
             }
         }
@@ -45,7 +45,7 @@ const Products = ({ category }) => {
     useEffect(() => {
         filterProductsByCategory();
 
-        
+
     }, [category, products]);
 
     return (
@@ -54,7 +54,7 @@ const Products = ({ category }) => {
                 loading ? (Array(8).fill(0).map((elem, index) => (<ProductCardShimmer key={index} />))) : (
 
                     filterProducts && filterProducts.map((product) => (
-                        <div key={product.id} className='product bg-[#F4F5F7] w-[200px] h-[270px] flex flex-col justify-evenly py-2 px-2 rounded-2xl gap-2 my-6 cursor-pointer duration-300 hover:translate-y-[-20px] border-2 border-transparent hover:border-2 hover:border-[#F87192]' onClick={() => router.push(`/product/${product.id}`)}>
+                        <div key={product.id} className='product bg-[#F4F5F7] w-[170px] sm:w-[200px] h-[270px] flex flex-col justify-evenly py-2 px-2 rounded-2xl gap-2 my-6 cursor-pointer duration-300 hover:translate-y-[-20px] border-2 border-transparent hover:border-2 hover:border-[#F87192]' onClick={() => router.push(`/product/${product.id}`)}>
 
                             <div className='flex justify-center'>
                                 <img className='w-[100px] h-[100px]' src={product.image} alt="" />
