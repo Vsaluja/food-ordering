@@ -21,9 +21,7 @@ const HomePage = () => {
     const [categoryName, setCategoryName] = useState("All Items");
 
     useEffect(() => {
-        if (categories.category_image) {
-        }
-        // setLoading(false)
+        setLoading(false)
     }, [categories])
 
     const handleCategory = (category) => {

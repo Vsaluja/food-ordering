@@ -17,8 +17,8 @@ const Products = ({ category }) => {
         if (category !== 0) {
             filtered = products?.filter((product) => product.category === category);
         }
+        setLoading(false);
         setFilterProducts(filtered);
-        // setLoading(false);
     };
 
     useEffect(() => {
