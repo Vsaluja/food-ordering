@@ -20,7 +20,7 @@ body{
 
 /* For WebKit browsers */
 ::-webkit-scrollbar {
-    width: 5px; /* Width of the scrollbar */
+    width: 7px; /* Width of the scrollbar */
   }
   
   /* Track */

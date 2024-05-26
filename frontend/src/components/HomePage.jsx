@@ -40,7 +40,7 @@ const HomePage = () => {
     return (
         <Container className="flex-1 w-full">
             <div className="flex justify-between py-8 gap-2">
-                <div className="left flex w-[75%] flex-col bg-white rounded-xl min-h-[88vh] p-4 ">
+                <div className="left flex w-[75%] flex-col bg-white rounded-xl min-h-[100vh] p-4 ">
                     <Navbar />
                     <div className={`flex items-start lg:justify-center overflow-y-auto gap-10 py-2 my-10 min-h-[150px]`}>
                         {loading ? Array(6).fill(0).map((elem, index) => (<CategoryCardShimmer key={index} />)) : (
