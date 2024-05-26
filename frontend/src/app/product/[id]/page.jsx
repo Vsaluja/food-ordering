@@ -20,9 +20,8 @@ const ProductDisplay = ({ params }) => {
       console.log("res", response);
       if (response.status == 200) {
         setProduct(response.data)
-        setTimeout(() => {
-          setLoading(false)
-        }, 200);
+        setLoading(false)
+
       }
 
     } catch (error) {
