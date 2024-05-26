@@ -23,7 +23,7 @@ const HomePage = () => {
     useEffect(() => {
         if (categories.category_image) {
         }
-        setLoading(false)
+        // setLoading(false)
     }, [categories])
 
     const handleCategory = (category) => {
