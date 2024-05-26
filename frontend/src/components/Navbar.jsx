@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="flex md:hidden rounded-2xl justify-center items-center cursor-pointer relative">
             {user ? (
               <div onClick={() => setDropdown((prev) => !prev)}>
-                <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]  rounded-full border-[3px] border-[#313043]" src={`${user.user.image}`} alt="" />
+                <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]  rounded-full border-[3px] border-[#313043]" src={`${user?.user?.image}`} alt="" />
               </div>
             ) : (
 

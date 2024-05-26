@@ -8,7 +8,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import Cookies from 'js-cookie';
 import { setUser } from '@/app/store/users';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import LoginShimmer from './shimmers/LoginShimmer';
 import { setInitialLoad } from '@/app/store/Category';
 

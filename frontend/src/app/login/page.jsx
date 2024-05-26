@@ -10,7 +10,7 @@ import { setUser } from '../store/users';
 import MyGoogleLogin from '@/components/MyGoogleLogin';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
@@ -22,13 +22,24 @@ const Login = () => {
 
 
     const handleLogin = async (e) => {
+
+        const toastId = "loginToast";
         try {
             e.preventDefault();
 
+
+            // if (!toast.isActive(toastId)) {
+            toast.loading("Signing you in...", { id: toastId });
+            // }
+
             if (!email | email == "") {
+                toast.dismiss(toastId);
+                toast.error("Incorrect credentials")
                 return
             }
             else if (!password | password == "") {
+                toast.dismiss(toastId);
+                toast.error("Incorrect credentials")
                 return
             }
 
@@ -39,12 +50,16 @@ const Login = () => {
                 dispatch(setUser(authenticatedUser))
                 Cookies.set("access", response.data.tokens.access)
                 Cookies.set("refresh", response.data.tokens.refresh)
-                router.push('/')
-                toast.success("Logged in successfully!")
+                toast.dismiss(toastId);
+                toast.success("Signed in successfully. Redirecting...")
+                setTimeout(() => {
+                    router.push('/')
+                }, 1000);
+
             }
 
-
         } catch (error) {
+            toast.dismiss(toastId);
             toast.error("Incorrect credentials, Try again!")
             console.log("Error", error);
         }

@@ -6,17 +6,18 @@ import { setUser } from '@/app/store/users';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const MyGoogleLogin = () => {
 
     const dispatch = useDispatch();
     const router = useRouter();
-
+    const toastId = "loginToast"
     const handleOAuthLogin = async (response) => {
-        const credential = response.credential;
 
-        // console.log("cred", credential);
+        toast.loading("Signing you in...", { id: toastId });
+
+        const credential = response.credential;
 
         try {
             const googleTokenVerification = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${credential}`)
@@ -34,10 +35,14 @@ const MyGoogleLogin = () => {
             dispatch(setUser(authenticatedUser))
             Cookies.set("access", response.data.tokens.access)
             Cookies.set("refresh", response.data.tokens.refresh)
-            router.push('/')
-            toast.success("Logged in successfully!")
-            
+            toast.dismiss(toastId)
+            toast.success("Signed in successfully. Redirecting...")
+            setTimeout(() => {
+                router.push('/')
+            }, 1000);
+
         } catch (error) {
+            toast.dismiss(toastId)
             toast.error("Incorrect credentials, Try again!")
             console.log("Error while verifying information in OAuth");
         }
@@ -48,7 +53,7 @@ const MyGoogleLogin = () => {
     return (
         <div>
             <GoogleLogin
-                onSuccess={(credentialResponse) => { handleOAuthLogin(credentialResponse)}}
+                onSuccess={(credentialResponse) => { handleOAuthLogin(credentialResponse) }}
                 onError={() => {
                     console.log('Login Failed');
                 }}

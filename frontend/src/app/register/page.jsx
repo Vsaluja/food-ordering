@@ -6,6 +6,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 
 const Register = () => {
 
@@ -35,7 +36,11 @@ const Register = () => {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/register/`, { email, password, first_name, last_name })
             console.log(response);
             if (response?.status === 201) {
-                router.push('/login')
+                toast.success("Registration successful")
+                toast("Redirecting")
+                setTimeout(() => {
+                    router.push('/login')
+                }, 1000);
             }
 
 
