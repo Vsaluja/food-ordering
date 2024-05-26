@@ -10,10 +10,13 @@ import Cookies from 'js-cookie';
 import { setUser } from '@/app/store/users';
 import { toast } from 'react-toastify';
 import LoginShimmer from './shimmers/LoginShimmer';
+import { setInitialLoad } from '@/app/store/Category';
 
 
 const Sidebar = () => {
     const { user } = useSelector((state) => state.user)
+    const { initialLoad } = useSelector((state) => state.categories);
+    
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch();
     const handleLogout = () => {
@@ -25,9 +28,18 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
+
+        if(initialLoad){
+            setTimeout(() => {  
+                setLoading(false);
+                dispatch(setInitialLoad(false))
+            }, 1000);
+        }
+        else{
+            setLoading(false)
+        }
+
+
     }, [user.user])
 
     return (

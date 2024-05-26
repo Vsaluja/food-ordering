@@ -1,30 +1,49 @@
 'use client';
 import { lilita } from '@/fonts/fonts';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import ProductCardShimmer from './shimmers/ProductCardShimmer';
+import { setInitialLoad } from '@/app/store/Category';
 
 const Products = ({ category }) => {
     const router = useRouter();
+    
+    const dispatch = useDispatch()
+
     const { products } = useSelector((state) => state.categories);
+
+    const { initialLoad } = useSelector((state) => state.categories);
+
     const [filterProducts, setFilterProducts] = useState([]);
+
     const [loading, setLoading] = useState(true);
 
     const filterProductsByCategory = () => {
         let filtered = products;
+        
         if (category !== 0) {
             filtered = products?.filter((product) => product.category === category);
         }
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
+
+
+        if(initialLoad){
+            setTimeout(() => {  
+                setLoading(false);
+                dispatch(setInitialLoad(false))
+            }, 1000);
+        }
+        else{
+            setLoading(false)
+        }
         setFilterProducts(filtered);
     };
 
     useEffect(() => {
         filterProductsByCategory();
+
+        
     }, [category, products]);
 
     return (

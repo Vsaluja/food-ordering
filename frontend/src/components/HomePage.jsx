@@ -4,27 +4,31 @@ import Container from './Container';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { lilita } from '@/fonts/fonts';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Products from './Products';
-import { useRouter } from 'next/navigation';
 import CategoryCardShimmer from './shimmers/CategoryCardShimmer';
+import { setInitialLoad } from '@/app/store/Category';
 
 const HomePage = () => {
-    const { categories } = useSelector((state) => state.categories);
+    const { categories, initialLoad } = useSelector((state) => state.categories);
 
-    const router = useRouter();
-
-    console.log("router ", router);
+    const dispatch = useDispatch()
 
     const [loading, setLoading] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState(0);
     const [categoryName, setCategoryName] = useState("All Items");
 
     useEffect(() => {
-
-            setTimeout(() => {
+        console.log(initialLoad);
+        if(initialLoad){
+            setTimeout(() => {  
                 setLoading(false);
-            }, 500);
+                dispatch(setInitialLoad(false))
+            }, 1000);
+        }
+        else{
+            setLoading(false)
+        }
         
     }, [categories.category_name])
 
