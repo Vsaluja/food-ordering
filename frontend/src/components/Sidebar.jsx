@@ -7,7 +7,7 @@ import { AiFillHome } from "react-icons/ai";
 import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import Cookies from 'js-cookie';
-import { setUser } from '@/app/store/users';
+import { setCart, setUser } from '@/app/store/users';
 import toast from 'react-hot-toast';
 import LoginShimmer from './shimmers/LoginShimmer';
 import { setInitialLoad } from '@/app/store/Category';
@@ -24,6 +24,7 @@ const Sidebar = () => {
         Cookies.set("refresh", "")
         dispatch(setUser(""))
         toast.success("Logged out successfully!")
+        dispatch(setCart([]))
 
     }
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import { setUser } from "@/app/store/users";
+import { setCart, setUser } from "@/app/store/users";
 
 const Navbar = () => {
   const { user, cart } = useSelector((state) => state.user);
@@ -16,6 +16,7 @@ const Navbar = () => {
     Cookies.set("access", "")
     Cookies.set("refresh", "")
     dispatch(setUser(""))
+    dispatch(setCart([]))
     toast.success("Logged out successfully!")
     setDropdown(false)
 

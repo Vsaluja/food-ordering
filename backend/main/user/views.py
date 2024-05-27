@@ -125,18 +125,20 @@ class UserCartView(generics.ListCreateAPIView):
     serializer_class = UserCartJunctionSerializer
 
     def post(self, request):
+        if len(request.data) == 0:
+            print("Hi")
         # Sometimes we will send a single object and sometimes an array so it's making listOfObjects an array type
         print("data", request.data)
-        listOfObjects = []
-        if isinstance(request.data, list):
-            listOfObjects = request.data
-        else:
-            listOfObjects = [request.data]
+        listOfObjects = request.data['mycart']
+        # if isinstance(request.data, list):
+        #     listOfObjects = request.data
+        # else:
+        #     listOfObjects = [request.data]
 
         try:
 
             for item in listOfObjects:
-                userId = item.get('user')
+                userId = request.data.get('userId')
                 productId = item.get('product')
                 quantity = item.get('quantity')
 
@@ -157,6 +159,8 @@ class UserCartView(generics.ListCreateAPIView):
 
                 serializeCart = UserCartSerializer(getCart)
                 cartId = serializeCart.data['id']
+                print("my cart ID", cartId)
+                # UserCartJunction.objects.get(cart=cartId).delete()
 
                 findAllItems = UserCartJunction.objects.filter(cart=cartId)
                 findAllItems = UserCartJunctionSerializer(findAllItems,
@@ -176,6 +180,30 @@ class UserCartView(generics.ListCreateAPIView):
                             product=productId).update(quantity=quantity)
                         added = True
 
+                # Saving the product which was not already in our DB
+                if not added:
+                    mydata = {
+                        'cart': cartId,
+                        'product': productId,
+                        'quantity': quantity
+                    }
+
+                    serializeJunction = UserCartJunctionSerializer(data=mydata)
+                    if serializeJunction.is_valid():
+                        yo = serializeJunction.save()
+                        print("YO", yo)
+                    else:
+                        return Response(
+                            {
+                                "message": "Invalid data",
+                                "errors": serializeJunction.errors
+                            },
+                            status=status.HTTP_400_BAD_REQUEST)
+
+                # If an array is of len 1 or 0 it means there is only 1 item left in cart so find the user's cart and delete the row
+                if len(listOfObjects) <= 1:
+                    hi = UserCartJunction.objects.get(cart=cartId).delete()
+
                 # Below code is deleting other users cart data when a diff user logs in **NEEDS FIX**
                 # Removing the products which are not provided in the listOfObjects (array of post req)
                 product_ids = [item["product"] for item in listOfObjects]
@@ -187,26 +215,6 @@ class UserCartView(generics.ListCreateAPIView):
                 # Delete all the products in the DB that don't match with the products inside listOfObjects also making sure that the cart belongs to the correct user by using filter and not deleting other user's cart products
                 UserCartJunction.objects.exclude(
                     product__in=product_ids_set).filter(cart=cartId).delete()
-
-                # Saving the product which was not already in our DB
-                if not added:
-                    mydata = {
-                        'cart': cartId,
-                        'product': productId,
-                        'quantity': quantity
-                    }
-
-                    serializeJunction = UserCartJunctionSerializer(data=mydata)
-                    if serializeJunction.is_valid():
-                        serializeJunction.save()
-
-                    else:
-                        return Response(
-                            {
-                                "message": "Invalid data",
-                                "errors": serializeJunction.errors
-                            },
-                            status=status.HTTP_400_BAD_REQUEST)
 
             return Response({"success": True, "message": "data added"})
 
