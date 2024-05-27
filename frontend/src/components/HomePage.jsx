@@ -17,23 +17,22 @@ const HomePage = () => {
     const [loading, setLoading] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState(0);
     const [categoryName, setCategoryName] = useState("All Items");
-    const [mobileView, setMobileView] = useState(false);
+
 
     useEffect(() => {
-        console.log(initialLoad);
-        console.log("cat", categories.length);
-        if(initialLoad && categories.length > 1){
-            setTimeout(() => {  
+
+        if (initialLoad && categories.length > 1) {
+            setTimeout(() => {
                 setLoading(false);
                 dispatch(setInitialLoad(false))
             }, 1000);
         }
-        else{
-            if(categories.length > 1){
+        else {
+            if (categories.length > 1) {
                 setLoading(false)
             }
         }
-        
+
     }, [categories])
 
     const handleCategory = (category) => {

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { setUser } from "@/app/store/users";
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, cart } = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false)
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -37,9 +37,10 @@ const Navbar = () => {
             <FaSearch className="text-[20px]" />
           </div>
 
-          <div className="self-center w-[40px] h-[40px] sm:h-[50px] sm:w-[50px]  bg-[#333042] rounded-2xl flex justify-center items-center cursor-pointer">
+          <Link href={'/cart'} className="self-center w-[40px] h-[40px] sm:h-[50px] sm:w-[50px]  bg-[#333042] rounded-2xl flex justify-center items-center cursor-pointer relative">
             <MdOutlineShoppingCart className="text-[20px] text-gray-200" />
-          </div>
+            <div className="absolute top-[-5px] right-[-5px] bg-[#FE1861] rounded-full text-[12px] sm:text-[15px] px-[7px] text-center align-middle text-white font-semibold">{cart && cart.length}</div>
+          </Link>
 
           <div className="flex md:hidden rounded-2xl justify-center items-center cursor-pointer relative">
             {user ? (

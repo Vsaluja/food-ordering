@@ -6,15 +6,17 @@ import { FaPlus } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import ProductCardShimmer from './shimmers/ProductCardShimmer';
 import { setInitialLoad } from '@/app/store/Category';
+import { addToCart } from '@/app/store/users';
 
 const Products = ({ category }) => {
     const router = useRouter();
 
     const dispatch = useDispatch()
 
-    const { products } = useSelector((state) => state.categories);
+    const { products, initialLoad } = useSelector((state) => state.categories);
 
-    const { initialLoad } = useSelector((state) => state.categories);
+    const { cart, user } = useSelector((state) => state.user);
+
 
     const [filterProducts, setFilterProducts] = useState([]);
 
@@ -42,9 +44,14 @@ const Products = ({ category }) => {
         setFilterProducts(filtered);
     };
 
+    const handleAdd = (e, id) => {
+        e.stopPropagation();
+        dispatch(addToCart({ productId: id, quantity: 1 }))
+    }
+
+
     useEffect(() => {
         filterProductsByCategory();
-
 
     }, [category, products]);
 
@@ -54,7 +61,7 @@ const Products = ({ category }) => {
                 loading ? (Array(8).fill(0).map((elem, index) => (<ProductCardShimmer key={index} />))) : (
 
                     filterProducts && filterProducts.map((product) => (
-                        <div key={product.id} className='product bg-[#F4F5F7] w-[170px] sm:w-[200px] h-[270px] flex flex-col justify-evenly py-2 px-2 rounded-2xl gap-2 my-6 cursor-pointer duration-300 hover:translate-y-[-20px] border-2 border-transparent hover:border-2 hover:border-[#F87192]' onClick={() => router.push(`/product/${product.id}`)}>
+                        <div key={product.id} className='product bg-[#F4F5F7] w-[170px] sm:w-[200px] h-[270px] flex flex-col justify-evenly py-2 px-2 rounded-2xl gap-2 my-6 cursor-pointer duration-300  border-2 border-transparent hover:shadow-lg shadow-[#313043]' onClick={() => router.push(`/product/${product.id}`)}>
 
                             <div className='flex justify-center'>
                                 <img className='w-[100px] h-[100px]' src={product.image} alt="" />
@@ -72,7 +79,7 @@ const Products = ({ category }) => {
 
                             <div className='flex justify-between items-center py-2 px-4'>
                                 <h2 className='text-[#313043] font-bold text-[20px]'>${product.price}</h2>
-                                <div className='bg-[#313043] p-[10px] rounded-full cursor-pointer'>
+                                <div className='bg-[#313043] hover:bg-[#484662] duration-300 p-[10px] rounded-full cursor-pointer' onClick={(e) => handleAdd(e, product.id)}>
                                     <FaPlus className='text-white text-[13px]' />
                                 </div>
                             </div>
