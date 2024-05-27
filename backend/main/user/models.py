@@ -63,10 +63,13 @@ class UserModel(AbstractUser):
 
 
 class UserCart(models.Model):
-
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.email
+
+
+class UserCartJunction(models.Model):
+    cart = models.ForeignKey(UserCart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)

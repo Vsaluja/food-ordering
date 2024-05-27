@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import UserRegisterView, UserFindView, LoginView, UserCartView, OAuthLogin, DecodeToken
+from .views import UserRegisterView, UserFindView, LoginView, UserCartView, OAuthLogin, DecodeToken, GetUserCart
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
 
 urlpatterns = [
@@ -14,5 +14,6 @@ urlpatterns = [
          name='token_refresh'),
     path('api/token/verify/', DecodeToken.as_view(), name='token_verify'),
     path('api/cart/', UserCartView.as_view()),
+    path('api/getcart/', GetUserCart.as_view()),
     path('api/oauth/login/', OAuthLogin.as_view()),
 ]

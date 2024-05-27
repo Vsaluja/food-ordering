@@ -2,12 +2,13 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import UserModel, UserCart
-from .serializers import UserModelSerializer, UserCartSerializer
+from .models import UserModel, UserCart, UserCartJunction
+from .serializers import UserModelSerializer, UserCartSerializer, UserCartJunctionSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken  # can use this to create a new JWT
 import requests
 from django.contrib.auth import get_user_model
+from rest_framework import status
 # from simple_jwt import jwt
 import jwt
 from django.conf import settings
@@ -120,5 +121,137 @@ class DecodeToken(APIView):
 
 
 class UserCartView(generics.ListCreateAPIView):
-    queryset = UserCart.objects.all()
-    serializer_class = UserCartSerializer
+    queryset = UserCartJunction.objects.all()
+    serializer_class = UserCartJunctionSerializer
+
+    def post(self, request):
+        # Sometimes we will send a single object and sometimes an array so it's making listOfObjects an array type
+        print("data", request.data)
+        listOfObjects = []
+        if isinstance(request.data, list):
+            listOfObjects = request.data
+        else:
+            listOfObjects = [request.data]
+
+        try:
+
+            for item in listOfObjects:
+                userId = item.get('user')
+                productId = item.get('product')
+                quantity = item.get('quantity')
+
+                if not userId or not productId or not quantity:
+                    return Response({"message": "Missing required fields"},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
+                try:
+                    findUser = UserModel.objects.get(id=userId)
+                except UserModel.DoesNotExist:
+                    return Response({"message": "User not found"},
+                                    status=status.HTTP_404_NOT_FOUND)
+
+                findUserCart, created = UserCart.objects.get_or_create(
+                    user=findUser)
+
+                getCart = UserCart.objects.get(user=userId)
+
+                serializeCart = UserCartSerializer(getCart)
+                cartId = serializeCart.data['id']
+
+                findAllItems = UserCartJunction.objects.filter(cart=cartId)
+                findAllItems = UserCartJunctionSerializer(findAllItems,
+                                                          many=True)
+                print("find", findAllItems.data)
+
+                # Checking if the product already exists in the table. If yes then getting its quantity and adding to our quantity variable we are getting in our post request and then using serializeJunction we are storing the new updating quantity
+                added = False
+                for product in findAllItems.data:
+                    if product['product'] == productId:
+                        # difference = quantity
+                        # quantity += product['quantity']
+                        # abs(difference)
+                        # quantity = difference
+                        # print("added quantity", quantity)
+                        UserCartJunction.objects.filter(
+                            product=productId).update(quantity=quantity)
+                        added = True
+
+                # Below code is deleting other users cart data when a diff user logs in **NEEDS FIX**
+                # Removing the products which are not provided in the listOfObjects (array of post req)
+                product_ids = [item["product"] for item in listOfObjects]
+                # Storing unique productids which are already unique since we only update the quantity of products which are already present and not add another product row but still making sure
+                product_ids_set = set(product_ids)
+                # The __in lookup in Django's ORM is used to filter querysets based on whether a particular field's value is contained within a given iterable (such as a list, tuple, or queryset). So product is the name of the field of UserCartJunction model and product__in checks for matching values in product_ids_set if a value doesn't match it deletes it
+                # for user in findAllItems.data:
+                # Delete all the products in the DB that don't match with the products inside listOfObjects also making sure that the cart belongs to the correct user by using filter and not deleting other user's cart products
+                UserCartJunction.objects.exclude(
+                    product__in=product_ids_set).filter(cart=cartId).delete()
+
+                # Saving the product which was not already in our DB
+                if not added:
+                    mydata = {
+                        'cart': cartId,
+                        'product': productId,
+                        'quantity': quantity
+                    }
+
+                    serializeJunction = UserCartJunctionSerializer(data=mydata)
+                    if serializeJunction.is_valid():
+                        serializeJunction.save()
+
+                    else:
+                        return Response(
+                            {
+                                "message": "Invalid data",
+                                "errors": serializeJunction.errors
+                            },
+                            status=status.HTTP_400_BAD_REQUEST)
+
+            return Response({"success": True, "message": "data added"})
+
+        except Exception as e:
+            return Response(
+                {
+                    "message": "An unexpected error occurred",
+                    "error": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GetUserCart(APIView):
+    # Getting the list of all the items in a user's cart
+    def post(self, request):
+
+        userId = request.data.get('user')
+        print("user", userId)
+        if not userId:
+            return Response({"message": "Missing required fields"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            findUser = UserModel.objects.get(id=userId)
+        except UserModel.DoesNotExist:
+            return Response({"message": "User not found"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # print("find", findUser)
+        try:
+            getCart = UserCart.objects.get(user=userId)
+        except UserCart.DoesNotExist:
+            return Response({"message": "Cart not found"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            findAllItems = UserCartJunction.objects.filter(cart=getCart)
+            findAllItems = UserCartJunctionSerializer(findAllItems, many=True)
+            print("find", findAllItems.data)
+            for item in findAllItems.data:
+                # frontend user productId as the field
+                item['productId'] = item['product']
+                del item['product']
+
+            return Response({"success": True, "cartData": findAllItems.data})
+
+        except UserCartJunction.DoesNotExist:
+            return Response({"message": "Data not found"},
+                            status=status.HTTP_404_NOT_FOUND)

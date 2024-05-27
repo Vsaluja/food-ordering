@@ -1,5 +1,5 @@
 from django.contrib import admin
-from user.models import UserModel, UserCart
+from user.models import UserModel, UserCart, UserCartJunction
 # Register your models here..
 
 
@@ -13,13 +13,18 @@ class UserModelAdmin(admin.ModelAdmin):
 class UserCartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'product_id',
         'user_id',
-        'quantity',
     )
+    list_filter = ('id', )
+    ordering = ('id', )
+
+
+class CartJunctionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cart', 'product', 'quantity')
     list_filter = ('id', )
     ordering = ('id', )
 
 
 admin.site.register(UserModel, UserModelAdmin)
 admin.site.register(UserCart, UserCartAdmin)
+admin.site.register(UserCartJunction, CartJunctionAdmin)
