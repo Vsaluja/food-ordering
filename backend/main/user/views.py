@@ -181,6 +181,7 @@ class UserCartView(generics.ListCreateAPIView):
                 product_ids = [item["product"] for item in listOfObjects]
                 # Storing unique productids which are already unique since we only update the quantity of products which are already present and not add another product row but still making sure
                 product_ids_set = set(product_ids)
+
                 # The __in lookup in Django's ORM is used to filter querysets based on whether a particular field's value is contained within a given iterable (such as a list, tuple, or queryset). So product is the name of the field of UserCartJunction model and product__in checks for matching values in product_ids_set if a value doesn't match it deletes it
                 # for user in findAllItems.data:
                 # Delete all the products in the DB that don't match with the products inside listOfObjects also making sure that the cart belongs to the correct user by using filter and not deleting other user's cart products
