@@ -54,12 +54,12 @@ const HomePage = () => {
                     {/* <div className='flex justify-center mt-6'>
                         <img className='w-[100%] h-[300px]  rounded object-center' src="./Assets/ice.jpg" alt="" />
                     </div> */}
-                    <div className={`flex items-start lg:justify-center overflow-y-auto gap-10 py-2 my-10 min-h-[150px]`}>
+                    <div className={`flex items-start lg:justify-center overflow-y-auto gap-4 md:gap-10 py-2 my-10 min-h-[150px]`}>
                         {loading ? Array(6).fill(0).map((elem, index) => (<CategoryCardShimmer key={index} />)) : (
                             <>
                                 {categories.map((category, i) => (
-                                    <div key={category.id} className={`${selectedCategory == category.id ? "bg-white border-[4px] border-[#F87192] translate-z-10" : "border-[4px] border-transparent"}  flex-shrink-0 flex flex-col cursor-pointer justify-between items-center bg-[#efefef] rounded-2xl pb-2 px-2 duration-100 transi `} onClick={() => handleCategory(category)}>
-                                        <img className="max-w-[80px]" src={category?.category_image} alt="" />
+                                    <div key={category.id} className={`${selectedCategory == category.id ? "bg-white border-[4px] border-[#F87192] translate-z-10" : "border-[4px] border-transparent"}  flex-shrink-0 flex flex-col cursor-pointer justify-between h-[120px] items-center bg-[#efefef] rounded-2xl pb-2 px-2 duration-100`} onClick={() => handleCategory(category)}>
+                                        <img className="max-w-[70px]" src={category?.category_image} alt="" />
                                         <h2 className={`${selectedCategory == category.id ? "text-[#313043]" : "text-[#313043]"} capitalize font-bold `}>{category?.category_name}</h2>
                                     </div>
                                 ))}
