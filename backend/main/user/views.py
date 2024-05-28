@@ -41,17 +41,22 @@ class LoginView(APIView):
             serializer = UserModelSerializer(authenticatedUser)
             print("ser", serializer.data)
 
-            response = requests.post(
-                os.getenv('BACKEND_URL') + "/api/token/", {
-                    "email": email,
-                    "password": password
-                })
+            # When deployed our url wasn't able to make post request it was getting stuck
+            # response = requests.post(
+            #     os.getenv('BACKEND_URL') + "/api/token/", {
+            #         "email": email,
+            #         "password": password
+            #     })
 
-            response = response.json()
-            tokens = {
-                'access': response['access'],
-                'refresh': response['refresh']
-            }
+            # response = response.json()
+            accessToken = AccessToken.for_user(authenticatedUser)
+            refreshToken = AccessToken.for_user(authenticatedUser)
+            tokens = {"access": str(accessToken), "refresh": str(refreshToken)}
+
+            # tokens = {
+            #     'access': response['access'],
+            #     'refresh': response['refresh']
+            # }
             print('tokens', tokens)
             return Response({
                 "success": True,
