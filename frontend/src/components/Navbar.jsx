@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation'
 
 
 const Navbar = () => {
-  const size = window.innerWidth;
+  const [size, setSize] = useState(window.innerWidth);
   const { user, cart } = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false)
   const dispatch = useDispatch();
