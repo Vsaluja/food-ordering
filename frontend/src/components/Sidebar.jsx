@@ -49,7 +49,7 @@ const Sidebar = () => {
         }
 
 
-    }, [user.user])
+    }, [user.user, user?.user?.image])
 
 
     return (
@@ -61,7 +61,7 @@ const Sidebar = () => {
                     {user ? (
                         <div className='flex flex-col justify-center items-center gap-6'>
                             <div className=''>
-                                <img className='w-[160px] h-[160px] rounded-full border-[4px] border-[#313043]' src={user.user.image} alt="" />
+                                <img className='w-[160px] h-[160px] rounded-full border-[4px] border-[#313043]' src={user?.user?.image} alt="" />
                             </div>
                             <div>
                                 <h2 className='font-bold capitalize text-[#313043] text-[18px] text-center'>Welcome Back, {user.user.first_name}</h2>

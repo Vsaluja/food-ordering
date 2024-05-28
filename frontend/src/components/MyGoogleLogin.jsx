@@ -25,7 +25,8 @@ const MyGoogleLogin = () => {
             console.log("goog", googleTokenVerification);
             const email = googleTokenVerification.data.email;
             const first_name = googleTokenVerification.data.given_name;
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/oauth/login/`, { email, first_name })
+            const image = googleTokenVerification.data.picture;
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/oauth/login/`, { email, first_name, image })
 
             console.log("res", response);
             const authenticatedUser = {

@@ -34,7 +34,7 @@ const Navbar = () => {
   useEffect(() => {
     const size = window.innerWidth;
     setWidth(size)
-  }, [])
+  }, [user?.user?.image])
 
   return (
     <div className="border-b-2 px-4 py-2">
