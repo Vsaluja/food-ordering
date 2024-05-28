@@ -55,7 +55,7 @@ const CartPage = () => {
 
     return (
         <Container>
-            <div className='flex flex-col min-h-[90vh] bg-white m-10 px-4 sm:px-10 rounded-xl'>
+            <div className='flex flex-col min-h-[90vh] bg-white my-10 m-2 sm:m-10 px-4 sm:px-10 rounded-xl'>
                 <Navbar />
 
                 {cart.length > 0 ? (
