@@ -20,16 +20,20 @@ const Register = () => {
         try {
             e.preventDefault();
 
-            if (!email | email == "") {
-                return
-            }
-            else if (!password | password == "") {
-                return
-            }
-            else if (!first_name | first_name == "") {
+            if (!first_name | first_name == "") {
+                toast.error("Please enter first name")
                 return
             }
             else if (!last_name | last_name == "") {
+                toast.error("Please enter last name")
+                return
+            }
+            else if (!email | email == "") {
+                toast.error("Please enter valid email")
+                return
+            }
+            else if (!password | password == "") {
+                toast.error("Please enter valid password")
                 return
             }
 
@@ -37,8 +41,9 @@ const Register = () => {
             console.log(response);
             if (response?.status === 201) {
                 toast.success("Registration successful")
-                toast("Redirecting")
+                let load = toast("Redirecting")
                 setTimeout(() => {
+                    toast.dismiss(load)
                     router.push('/login')
                 }, 1000);
             }
@@ -54,10 +59,10 @@ const Register = () => {
 
     return (
         <Container className={``}>
-            <div className='flex flex-col flex-1 bg-white my-10 m-2 sm:m-10 px-4 sm:px-10 rounded-xl'>
+            <div className='flex flex-col flex-1 min-h-[88vh] bg-white my-10 m-2 sm:m-10 px-4 sm:px-10 rounded-xl'>
 
                 <Navbar />
-                <div className='flex flex-1 my-10 lg:my-4'>
+                <div className='flex my-10 lg:my-4'>
                     <form onSubmit={(e) => handleRegister(e)} className=' flex flex-col gap-6 bg-[#E7F0FD] max-h-[550px] w-full max-w-[400px]  mx-auto py-4 px-6 rounded'>
                         <h2 className={`${lilita.className} font-bold text-[40px] font-sans mb-2 text-[#313043]`}>Sign Up</h2>
                         <input className='border-2 p-2 rounded w-full' type="text" placeholder='First name' onChange={(e) => setFirstName(e.target.value)} />

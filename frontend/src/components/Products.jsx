@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import ProductCardShimmer from './shimmers/ProductCardShimmer';
 import { setInitialLoad } from '@/app/store/Category';
 import { addToCart } from '@/app/store/users';
+import toast from 'react-hot-toast';
 
 const Products = ({ category }) => {
     const router = useRouter();
@@ -46,6 +47,7 @@ const Products = ({ category }) => {
 
     const handleAdd = (e, id) => {
         e.stopPropagation();
+        toast.success("Item added to cart")
         dispatch(addToCart({ productId: id, quantity: 1 }))
     }
 

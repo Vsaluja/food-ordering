@@ -70,7 +70,7 @@ const Login = () => {
 
     return (
         <Container className={``}>
-            <div className='flex flex-col flex-1 bg-white my-10 m-2 sm:m-10 px-4 sm:px-10 rounded-xl'>
+            <div className='flex flex-col flex-1 min-h-[88vh] bg-white my-10 m-2 sm:m-10 px-4 sm:px-10 rounded-xl'>
 
                 <Navbar />
                 <div className='flex flex-col gap-4 items-center flex-1 my-10 lg:my-4'>
