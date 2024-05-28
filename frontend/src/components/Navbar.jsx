@@ -9,7 +9,9 @@ import { toast } from "react-toastify";
 import { setCart, setUser } from "@/app/store/users";
 import { usePathname } from 'next/navigation'
 
+
 const Navbar = () => {
+  const size = window.innerWidth;
   const { user, cart } = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false)
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const Navbar = () => {
             <div className="absolute top-[-5px] right-[-5px] bg-[#FE1861] rounded-full text-[12px] sm:text-[15px] px-[7px] text-center align-middle text-white font-semibold">{cart && cart.length}</div>
           </Link>
 
-          <div className={`flex ${pathname == "/" ? "hidden" : ""} rounded-2xl justify-center items-center cursor-pointer relative`}>
+          <div className={`flex ${pathname == "/" && size > 768 ? "hidden" : "block"} rounded-2xl justify-center items-center cursor-pointer relative`}>
             {user ? (
               <div onClick={() => setDropdown((prev) => !prev)}>
                 <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full border-[3px] border-[#313043]" src={`${user?.user?.image}`} alt="" />

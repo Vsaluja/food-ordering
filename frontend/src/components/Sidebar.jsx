@@ -35,13 +35,17 @@ const Sidebar = () => {
     useEffect(() => {
 
         if (initialLoad) {
+
             setTimeout(() => {
                 setLoading(false);
                 dispatch(setInitialLoad(false))
             }, 1000);
+
         }
         else {
+
             setLoading(false)
+
         }
 
 
