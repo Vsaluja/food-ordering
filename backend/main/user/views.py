@@ -12,6 +12,7 @@ from rest_framework import status
 # from simple_jwt import jwt
 import jwt
 from django.conf import settings
+import os
 # Create your views here.
 
 
@@ -40,10 +41,11 @@ class LoginView(APIView):
             serializer = UserModelSerializer(authenticatedUser)
             print("ser", serializer.data)
 
-            response = requests.post("http://127.0.0.1:8000/api/token/", {
-                "email": email,
-                "password": password
-            })
+            response = requests.post(
+                os.getenv('BACKEND_URL') + "/api/token/", {
+                    "email": email,
+                    "password": password
+                })
 
             response = response.json()
             tokens = {
