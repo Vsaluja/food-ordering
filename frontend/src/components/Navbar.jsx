@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation'
 
 
 const Navbar = () => {
-  const [size, setSize] = useState(window.innerWidth);
+  const [width, setWidth] = useState()
   const { user, cart } = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false)
   const dispatch = useDispatch();
@@ -31,7 +31,10 @@ const Navbar = () => {
 
   }
 
-  console.log("pathname", pathname);
+  useEffect(() => {
+    const size = window.innerWidth;
+    setWidth(size)
+  }, [])
 
   return (
     <div className="border-b-2 px-4 py-2">
@@ -54,7 +57,7 @@ const Navbar = () => {
             <div className="absolute top-[-5px] right-[-5px] bg-[#FE1861] rounded-full text-[12px] sm:text-[15px] px-[7px] text-center align-middle text-white font-semibold">{cart && cart.length}</div>
           </Link>
 
-          <div className={`flex ${pathname == "/" && size > 768 ? "hidden" : "block"} rounded-2xl justify-center items-center cursor-pointer relative`}>
+          <div className={`flex ${pathname == "/" && width > 768 ? "hidden" : "block"} rounded-2xl justify-center items-center cursor-pointer relative`}>
             {user ? (
               <div onClick={() => setDropdown((prev) => !prev)}>
                 <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full border-[3px] border-[#313043]" src={`${user?.user?.image}`} alt="" />
