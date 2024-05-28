@@ -51,11 +51,14 @@ const HomePage = () => {
             <div className="flex justify-between py-8 gap-2">
                 <div className="left flex w-[100%] md:w-[75%] flex-col bg-white rounded-xl min-h-[100vh] p-2 ">
                     <Navbar />
+                    {/* <div className='flex justify-center mt-6'>
+                        <img className='w-[100%] h-[300px]  rounded object-center' src="./Assets/ice.jpg" alt="" />
+                    </div> */}
                     <div className={`flex items-start lg:justify-center overflow-y-auto gap-10 py-2 my-10 min-h-[150px]`}>
                         {loading ? Array(6).fill(0).map((elem, index) => (<CategoryCardShimmer key={index} />)) : (
                             <>
                                 {categories.map((category, i) => (
-                                    <div key={category.id} className={`${selectedCategory == category.id ? "bg-white border-[4px] border-[#F87192] translate-z-10" : "border-[4px] border-transparent"}  flex-shrink-0 flex flex-col cursor-pointer justify-between items-center bg-[#fdfdfd] rounded-2xl pb-2 px-2 duration-100 transi `} onClick={() => handleCategory(category)}>
+                                    <div key={category.id} className={`${selectedCategory == category.id ? "bg-white border-[4px] border-[#F87192] translate-z-10" : "border-[4px] border-transparent"}  flex-shrink-0 flex flex-col cursor-pointer justify-between items-center bg-[#efefef] rounded-2xl pb-2 px-2 duration-100 transi `} onClick={() => handleCategory(category)}>
                                         <img className="max-w-[80px]" src={category?.category_image} alt="" />
                                         <h2 className={`${selectedCategory == category.id ? "text-[#313043]" : "text-[#313043]"} capitalize font-bold `}>{category?.category_name}</h2>
                                     </div>
@@ -73,7 +76,7 @@ const HomePage = () => {
                     </div>
 
                 </div>
-                <div className="right hidden md:block md:w-[25%] max-h-[88vh] bg-white rounded-xl">
+                <div className="right hidden md:block md:w-[25%] max-h-[100vh] bg-white rounded-xl">
                     <Sidebar />
                 </div>
             </div>

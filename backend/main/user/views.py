@@ -125,17 +125,17 @@ class UserCartView(generics.ListCreateAPIView):
     serializer_class = UserCartJunctionSerializer
 
     def post(self, request):
-        if len(request.data) == 0:
-            print("Hi")
-        # Sometimes we will send a single object and sometimes an array so it's making listOfObjects an array type
         print("data", request.data)
         listOfObjects = request.data['mycart']
-        # if isinstance(request.data, list):
-        #     listOfObjects = request.data
-        # else:
-        #     listOfObjects = [request.data]
 
         try:
+            # If an array is of len 0 it means there is no item left in cart so find the user's cart and delete the row
+            if len(listOfObjects) == 0:
+                userId = request.data.get('userId')
+                getCart = UserCart.objects.get(user=userId)
+                cartId = getCart.id
+                UserCartJunction.objects.get(cart=cartId).delete()
+                print("run")
 
             for item in listOfObjects:
                 userId = request.data.get('userId')
@@ -157,28 +157,20 @@ class UserCartView(generics.ListCreateAPIView):
 
                 getCart = UserCart.objects.get(user=userId)
 
-                serializeCart = UserCartSerializer(getCart)
-                cartId = serializeCart.data['id']
-                print("my cart ID", cartId)
-                # UserCartJunction.objects.get(cart=cartId).delete()
+                cartId = getCart.id
 
+                # Fetching all product rows relating the specific user's cart
                 findAllItems = UserCartJunction.objects.filter(cart=cartId)
                 findAllItems = UserCartJunctionSerializer(findAllItems,
                                                           many=True)
-                print("find", findAllItems.data)
 
                 # Checking if the product already exists in the table. If yes then getting its quantity and adding to our quantity variable we are getting in our post request and then using serializeJunction we are storing the new updating quantity
                 added = False
                 for product in findAllItems.data:
                     if product['product'] == productId:
-                        # difference = quantity
-                        # quantity += product['quantity']
-                        # abs(difference)
-                        # quantity = difference
-                        # print("added quantity", quantity)
+                        added = True
                         UserCartJunction.objects.filter(
                             product=productId).update(quantity=quantity)
-                        added = True
 
                 # Saving the product which was not already in our DB
                 if not added:
@@ -200,10 +192,6 @@ class UserCartView(generics.ListCreateAPIView):
                             },
                             status=status.HTTP_400_BAD_REQUEST)
 
-                # If an array is of len 1 or 0 it means there is only 1 item left in cart so find the user's cart and delete the row
-                if len(listOfObjects) <= 1:
-                    hi = UserCartJunction.objects.get(cart=cartId).delete()
-
                 # Below code is deleting other users cart data when a diff user logs in **NEEDS FIX**
                 # Removing the products which are not provided in the listOfObjects (array of post req)
                 product_ids = [item["product"] for item in listOfObjects]
@@ -215,6 +203,8 @@ class UserCartView(generics.ListCreateAPIView):
                 # Delete all the products in the DB that don't match with the products inside listOfObjects also making sure that the cart belongs to the correct user by using filter and not deleting other user's cart products
                 UserCartJunction.objects.exclude(
                     product__in=product_ids_set).filter(cart=cartId).delete()
+
+                print("RAN COMPLETE")
 
             return Response({"success": True, "message": "data added"})
 

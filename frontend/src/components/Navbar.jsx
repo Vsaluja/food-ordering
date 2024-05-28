@@ -7,20 +7,29 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { setCart, setUser } from "@/app/store/users";
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
   const { user, cart } = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false)
   const dispatch = useDispatch();
+  const pathname = usePathname()
   const handleLogout = () => {
+    toast.success("Logged out successfully!")
     Cookies.set("access", "")
     Cookies.set("refresh", "")
     dispatch(setUser(""))
     dispatch(setCart([]))
-    toast.success("Logged out successfully!")
+    let load = toast.loading("Working on it")
+    setTimeout(() => {
+      toast.dismiss(load)
+    }, [1000])
     setDropdown(false)
+    console.log("WORKED");
 
   }
+
+  console.log("pathname", pathname);
 
   return (
     <div className="border-b-2 px-4 py-2">
@@ -43,10 +52,10 @@ const Navbar = () => {
             <div className="absolute top-[-5px] right-[-5px] bg-[#FE1861] rounded-full text-[12px] sm:text-[15px] px-[7px] text-center align-middle text-white font-semibold">{cart && cart.length}</div>
           </Link>
 
-          <div className="flex md:hidden rounded-2xl justify-center items-center cursor-pointer relative">
+          <div className={`flex ${pathname == "/" ? "hidden" : ""} rounded-2xl justify-center items-center cursor-pointer relative`}>
             {user ? (
               <div onClick={() => setDropdown((prev) => !prev)}>
-                <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]  rounded-full border-[3px] border-[#313043]" src={`${user?.user?.image}`} alt="" />
+                <img className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full border-[3px] border-[#313043]" src={`${user?.user?.image}`} alt="" />
               </div>
             ) : (
 

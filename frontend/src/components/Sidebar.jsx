@@ -23,8 +23,12 @@ const Sidebar = () => {
         Cookies.set("access", "")
         Cookies.set("refresh", "")
         dispatch(setUser(""))
-        toast.success("Logged out successfully!")
         dispatch(setCart([]))
+        let load = toast.loading("Working on it")
+        setTimeout(() => {
+            toast.dismiss(load)
+            toast.success("Logged out successfully!")
+        }, [1000])
 
     }
 
@@ -42,6 +46,7 @@ const Sidebar = () => {
 
 
     }, [user.user])
+
 
     return (
         <div className='px-6 py-10'>
@@ -88,6 +93,7 @@ const Sidebar = () => {
                     )}
                 </>
             )}
+
         </div>
     )
 }
