@@ -51,11 +51,6 @@ const CartPage = () => {
         dispatch(removeFromCart({ productId }))
     }
 
-    const handleRedirect = () => {
-
-        router.push('/order/success?success=true');
-
-    }
 
     const placeOrder = async () => {
         let load = toast.loading("Placing your order...")
