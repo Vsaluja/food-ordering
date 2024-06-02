@@ -4,15 +4,19 @@ import Navbar from '@/components/Navbar'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ImCross } from "react-icons/im";
-import { addToCart, reduceFromCart, removeFromCart } from '../store/users'
+import { addToCart, reduceFromCart, removeFromCart, setCart } from '../store/users'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 
 const CartPage = () => {
 
-    const { cart } = useSelector((state) => state.user)
+    const { user, cart } = useSelector((state) => state.user)
     const { products } = useSelector((state) => state.categories)
     const [total, setTotal] = useState(0);
+    const router = useRouter();
     const dispatch = useDispatch()
 
     const [userCart, setUserCart] = useState([])
@@ -46,6 +50,48 @@ const CartPage = () => {
     const remove = (productId) => {
         dispatch(removeFromCart({ productId }))
     }
+
+    const handleRedirect = () => {
+
+        router.push('/order/success?success=true');
+
+    }
+
+    const placeOrder = async () => {
+        let load = toast.loading("Placing your order...")
+        let abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let orderId = "";
+        for (let i = 0; i < 10; i++) {
+            let random = Math.floor(Math.random() * abc.length)
+            orderId += abc.charAt(random);
+        }
+
+        let mytotal = (Number(total.toFixed(2)) + 4);
+        let orderItems = userCart.map((order) => ({ ...order, user: user.user.id, product: order['id'], total: mytotal, product_price: order['price'], order_number: orderId }))
+
+        orderItems.map((order) => {
+            delete order.id
+            delete order.category
+            delete order.description
+            delete order.image
+            delete order.name
+            delete order.price
+            delete order.size
+        })
+
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/`, orderItems)
+
+        if (response.status == 201) {
+            setTimeout(() => {
+                toast.dismiss(load)
+                toast.success("Your order has been placed")
+                dispatch(setCart([]))
+            }, 3000);
+        }
+
+    }
+
+
 
     useEffect(() => {
         getUserCart()
@@ -108,11 +154,16 @@ const CartPage = () => {
                                     <p className='font-semibold'>Delivery</p>
                                     <p className="text-gray-400 text-[12px] py-2 px-4">Delivery Fee - $4</p>
                                 </div>
-                                <div className="total flex justify-between text-[18px] font-semibold">
+                                <div className="total flex justify-between text-[18px] font-bold">
                                     <p className='uppercase'>total cost</p>
                                     <p>${(total + 4).toFixed(2)}</p>
                                 </div>
-                                <button className='capitalize mt-10 bg-[#313043] font-bold p-4 rounded text-white text-[16px] max-w-[400px]'>Place Order</button>
+                                {user ? (
+                                    <button onClick={placeOrder} className='capitalize mt-10 bg-[#313043] font-bold p-4 rounded text-white text-[16px] max-w-[400px]'>Place Order</button>
+
+                                ) : (
+                                    <Link href={'/login'} className='capitalize mt-10 bg-[#313043] font-bold p-4 rounded text-white text-[16px] max-w-[400px] text-center'>Sign in to place order</Link>
+                                )}
                             </div>
                         </div>
 

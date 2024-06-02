@@ -73,3 +73,13 @@ class UserCartJunction(models.Model):
     cart = models.ForeignKey(UserCart, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+
+
+class Order(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    total = models.FloatField(default=0)
+    product_price = models.FloatField(default=0)
+    order_number = models.CharField(max_length=35)
+    date_created = models.DateTimeField(auto_now_add=True)

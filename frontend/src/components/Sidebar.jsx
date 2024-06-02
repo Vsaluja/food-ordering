@@ -11,6 +11,9 @@ import { setCart, setUser } from '@/app/store/users';
 import toast from 'react-hot-toast';
 import LoginShimmer from './shimmers/LoginShimmer';
 import { setInitialLoad } from '@/app/store/Category';
+import { MdAddAPhoto } from "react-icons/md";
+import EditProfilePic from './EditProfilePic';
+
 
 
 const Sidebar = () => {
@@ -18,6 +21,7 @@ const Sidebar = () => {
     const { initialLoad } = useSelector((state) => state.categories);
 
     const [loading, setLoading] = useState(true)
+    const [edit, setEdit] = useState(false)
     const dispatch = useDispatch();
     const handleLogout = () => {
         Cookies.set("access", "")
@@ -29,6 +33,10 @@ const Sidebar = () => {
             toast.dismiss(load)
             toast.success("Logged out successfully!")
         }, [1000])
+
+    }
+
+    const editProfilePic = async () => {
 
     }
 
@@ -60,8 +68,13 @@ const Sidebar = () => {
 
                     {user ? (
                         <div className='flex flex-col justify-center items-center gap-6'>
-                            <div className=''>
+                            <div className='relative'>
                                 <img className='w-[160px] h-[160px] rounded-full border-[4px] border-[#313043]' src={user?.user?.image} alt="" />
+                                <div className='flex gap-2 cursor-pointer' onClick={() => setEdit((prev) => !prev)}>
+                                    <MdAddAPhoto className=' bottom-2 right-4 text-gray-600 text-[20px]' />
+                                    <div className='font-semibold text-[#313043]'>Edit profile picture</div>
+                                </div>
+
                             </div>
                             <div>
                                 <h2 className='font-bold capitalize text-[#313043] text-[18px] text-center'>Welcome Back, {user.user.first_name}</h2>
@@ -96,6 +109,12 @@ const Sidebar = () => {
                         </div>
                     )}
                 </>
+            )}
+
+            {edit && (
+                <div className='absolute top-0 right-0'>
+                    <EditProfilePic setEdit={setEdit} />
+                </div>
             )}
 
         </div>

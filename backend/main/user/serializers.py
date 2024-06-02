@@ -1,6 +1,6 @@
 from .models import UserModel
 from rest_framework import serializers
-from .models import UserCart, UserCartJunction
+from .models import UserCart, UserCartJunction, Order
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -43,4 +43,11 @@ class UserCartJunctionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserCartJunction
+        fields = "__all__"
+
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
         fields = "__all__"

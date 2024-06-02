@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import UserModel, UserCart, UserCartJunction
-from .serializers import UserModelSerializer, UserCartSerializer, UserCartJunctionSerializer
+from .models import UserModel, UserCart, UserCartJunction, Order
+from .serializers import UserModelSerializer, UserCartSerializer, UserCartJunctionSerializer, OrderSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken  # can use this to create a new JWT
 import requests
@@ -22,6 +22,11 @@ class UserRegisterView(generics.ListCreateAPIView):
 
 
 class UserFindView(generics.RetrieveUpdateAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = UserModelSerializer
+
+
+class ProfilePicView(generics.UpdateAPIView):
     queryset = UserModel.objects.all()
     serializer_class = UserModelSerializer
 
@@ -141,12 +146,13 @@ class UserCartView(generics.ListCreateAPIView):
         listOfObjects = request.data['mycart']
 
         try:
+            print("len", len(listOfObjects))
             # If an array is of len 0 it means there is no item left in cart so find the user's cart and delete the row
             if len(listOfObjects) == 0:
                 userId = request.data.get('userId')
                 getCart = UserCart.objects.get(user=userId)
                 cartId = getCart.id
-                UserCartJunction.objects.get(cart=cartId).delete()
+                UserCartJunction.objects.filter(cart=cartId).delete()
                 print("run")
 
             for item in listOfObjects:
@@ -266,3 +272,64 @@ class GetUserCart(APIView):
         except UserCartJunction.DoesNotExist:
             return Response({"message": "Data not found"},
                             status=status.HTTP_404_NOT_FOUND)
+
+
+class OrderView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def post(self, request):
+
+        orders = request.data
+
+        print("hi", request.data)
+
+        for order in orders:
+
+            serializedData = OrderSerializer(data=order)
+
+            if serializedData.is_valid():
+                serializedData.save()
+            else:
+                return Response(
+                    {
+                        "message": "Invalid data",
+                        "errors": serializedData.errors
+                    },
+                    status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({
+            "message": "Saved data",
+            "success": True,
+        },
+                        status=status.HTTP_201_CREATED)
+
+
+class GetOrderView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def get(self, request, pk):
+
+        userOrders = Order.objects.filter(user=pk)
+        # userOrders = [
+        #     userOrders
+        # ]  #making it an array or list if there is only 1 product that the user ever ordered
+        serialized = OrderSerializer(userOrders, many=True)
+        orders = serialized.data
+
+        newList = []
+        processed_orderids = set()
+        for order in orders:
+            if order['order_number'] not in processed_orderids:
+                print("order", order['order_number'])
+                sublist = []
+                for order2 in orders:
+                    if order['order_number'] == order2['order_number']:
+                        sublist.append(order2)
+                newList.append(sublist)
+                processed_orderids.add(order['order_number'])
+
+        print("list", newList)
+
+        return Response({"message": "done", "orders": newList})
