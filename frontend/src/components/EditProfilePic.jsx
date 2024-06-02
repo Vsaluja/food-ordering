@@ -45,6 +45,7 @@ const EditProfilePic = ({ setEdit }) => {
         }
     }
 
+
     return (
         <div className='backdrop-blur-[2px] h-[100vh] w-[100vw] flex justify-center items-center duration-500'>
             <form onSubmit={(e) => handleSubmit(e)} className='h-[200px] w-full max-w-[500px] bg-[#313043] rounded-lg flex justify-center items-center gap-2 p-4 relative'>
