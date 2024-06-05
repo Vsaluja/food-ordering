@@ -60,7 +60,7 @@ const Orders = () => {
                     <Navbar />
                     <h2 className={`${lilita.className} text-[25px] font-bold m-6`}>My Orders</h2>
                     <div className=''>
-                        {orders.length > 1 ? (
+                        {orders.length > 0 ? (
                             <div className='flex flex-col gap-10 px-2'>
                                 {orders?.reverse().map((order, i) => {
                                     return (
@@ -80,7 +80,7 @@ const Orders = () => {
                                                     return (
                                                         <div>
 
-                                                            <Link href={`/product/${singleOrder?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[200px] sm:w-full sm:max-w-[200px] lg:max-w-[250px] rounded-xl bg-[#ff9cbd]`}>
+                                                            <Link href={`/product/${singleOrder?.addProduct?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[200px] sm:w-full sm:max-w-[200px] lg:max-w-[300px] rounded-xl bg-[#ff9cbd]`}>
                                                                 <div>
                                                                     <img className='h-[50px] w-[50px]' src={singleOrder.addProduct.image} alt="" />
                                                                 </div>

@@ -68,12 +68,17 @@ const Navbar = () => {
                 Login
               </Link>
             )}
-            {dropdown && (<div className="absolute top-[53px] right-[-18px] text-left bg-white w-[200px] border-2 border-t-0 border-r-0 duration-300 rounded">
-              <div className="py-1 flex flex-col justify-center items-center gap-2 font-bold text-[#313043]">
+            {dropdown && (<div className="absolute top-[53px] md:top-[70px] right-[-18px] text-left bg-white w-[200px] border-2 border-t-0 border-r-0 duration-300 rounded">
+              <div className="py-4 flex flex-col justify-center items-center gap-6 font-bold text-[#313043]">
                 <Link
                   href="/"
                 >
-                  Settings
+                  Home
+                </Link>
+                <Link
+                  href="/user/orders"
+                >
+                  My Orders
                 </Link>
                 <button
                   onClick={handleLogout}
