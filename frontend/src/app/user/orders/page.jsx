@@ -65,7 +65,7 @@ const Orders = () => {
                                 {orders?.reverse().map((order, i) => {
                                     return (
                                         <div key={i} className='flex flex-col p-[5px] sm:p-4 rounded-md bg-[#E7F0FD]'>
-                                            <div className='flex text-center gap-2 justify-between items-end font-bold mb-2'>
+                                            <div className='flex text-center gap-2 text-[10px] md:text-[16px] justify-between items-end font-bold mb-2'>
 
                                                 <div className=' text-[#313043]'>
                                                     Date: {moment(order[0]?.date_created).format('MMMM Do YYYY, h:mm a')}
@@ -75,12 +75,12 @@ const Orders = () => {
                                                     Order No.: {order[0]?.order_number}
                                                 </div>
                                             </div>
-                                            <div className='flex flex-wrap rounded justify-center sm:justify-start sm:gap-4 capitalize text-[16px] font-semibold'>
+                                            <div className='flex flex-wrap rounded  justify-center sm:justify-start sm:gap-4 capitalize  font-semibold'>
                                                 {order?.map((singleOrder, id) => {
                                                     return (
                                                         <div>
 
-                                                            <Link href={`/product/${singleOrder?.addProduct?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[150px] h-full max-h-[70px] sm:w-full sm:max-w-[200px] lg:max-w-[300px] rounded-xl bg-[#ff9cbd]`}>
+                                                            <Link href={`/product/${singleOrder?.addProduct?.id}`} key={id} className={`${lilita.className} flex gap-2 text-[10px] md:text-[16px] justify-between items-center border-2 p-2 px-4 tracking-wider w-[150px] h-full max-h-[70px] sm:w-full sm:max-w-[200px] lg:max-w-[300px] rounded-xl bg-[#ff9cbd]`}>
                                                                 <div className='hidden sm:block'>
                                                                     <img className='h-[50px] w-[50px]' src={singleOrder.addProduct.image} alt="" />
                                                                 </div>
@@ -96,7 +96,7 @@ const Orders = () => {
                                                     )
                                                 })}
                                             </div>
-                                            <div className='self-end text-[#313043] font-bold text-[20px]'>
+                                            <div className='self-end text-[#313043] text-[14px] font-bold md:text-[20px] mt-2'>
                                                 Total ${order[0].total}
                                             </div>
                                         </div>
