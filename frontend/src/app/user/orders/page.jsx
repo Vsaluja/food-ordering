@@ -75,7 +75,7 @@ const Orders = () => {
                                                     Order No.: {order[0]?.order_number}
                                                 </div>
                                             </div>
-                                            <div className='flex flex-wrap rounded justify-center sm:gap-4 capitalize text-[16px] font-semibold'>
+                                            <div className='flex flex-wrap rounded justify-center sm:justify-start sm:gap-4 capitalize text-[16px] font-semibold'>
                                                 {order?.map((singleOrder, id) => {
                                                     return (
                                                         <div>
