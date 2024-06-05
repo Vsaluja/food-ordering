@@ -64,7 +64,7 @@ const Orders = () => {
                             <div className='flex flex-col gap-10 px-2'>
                                 {orders?.reverse().map((order, i) => {
                                     return (
-                                        <div key={i} className='flex flex-col gap p-4 rounded-md bg-[#E7F0FD]'>
+                                        <div key={i} className='flex flex-col p-[5px] sm:p-4 rounded-md bg-[#E7F0FD]'>
                                             <div className='flex text-center gap-2 justify-between items-end font-bold mb-2'>
 
                                                 <div className=' text-[#313043]'>
@@ -75,13 +75,13 @@ const Orders = () => {
                                                     Order No.: {order[0]?.order_number}
                                                 </div>
                                             </div>
-                                            <div className='flex justify-center sm:justify-start flex-wrap rounded gap-4 capitalize text-[16px] font-semibold'>
+                                            <div className='flex flex-wrap rounded justify-center sm:gap-4 capitalize text-[16px] font-semibold'>
                                                 {order?.map((singleOrder, id) => {
                                                     return (
                                                         <div>
 
-                                                            <Link href={`/product/${singleOrder?.addProduct?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[200px] sm:w-full sm:max-w-[200px] lg:max-w-[300px] rounded-xl bg-[#ff9cbd]`}>
-                                                                <div>
+                                                            <Link href={`/product/${singleOrder?.addProduct?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[150px] h-full max-h-[70px] sm:w-full sm:max-w-[200px] lg:max-w-[300px] rounded-xl bg-[#ff9cbd]`}>
+                                                                <div className='hidden sm:block'>
                                                                     <img className='h-[50px] w-[50px]' src={singleOrder.addProduct.image} alt="" />
                                                                 </div>
                                                                 <div className='text-center'>
