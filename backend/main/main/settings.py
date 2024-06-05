@@ -30,8 +30,11 @@ SECRET_KEY = 'django-insecure-5yod+ep^m7@nx$yx%36jnp_(4#0ymc)jw8f=6u0#b9ey=1%&=q
 DEBUG = True
 
 # None else can make request other than
-# ALLOWED_HOSTS = ["127.0.0.1", "http://localhost:3000"]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "127.0.0.1", "http://localhost:3000",
+    "https://food-ordering-gules-xi.vercel.app"
+]
+# ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
