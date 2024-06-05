@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { lilita } from '@/fonts/fonts'
 
 
 const CartPage = () => {
@@ -167,7 +168,7 @@ const CartPage = () => {
                 ) : (
                     <div className='flex flex-col  items-center justify-center'>
                         <img src="https://i.postimg.cc/WbjYK3Q2/Screenshot-293-removebg-preview.png" alt="" />
-                        <h2 className='text-[20px] text-[#313043] font-bold tracking-wider'>Your cart is empty</h2>
+                        <h2 className={`${lilita.className} text-[#313043] text-[20px] tracking-wider`}>Your cart is empty</h2>
                     </div>
                 )}
 

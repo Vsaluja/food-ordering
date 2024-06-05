@@ -58,49 +58,55 @@ const Orders = () => {
                 <div className='flex flex-col flex-1 min-h-[88vh] bg-white my-10 m-2 pb-10 sm:m-10 px-4 sm:px-10 rounded-xl'>
                     {/* bg-[#ff7aa4] */}
                     <Navbar />
-                    <h2 className='text-[25px] font-bold m-6'>My Orders</h2>
-                    <div className='flex flex-col gap-10 px-8'>
-                        {orders && orders?.map((order, i) => {
-                            return (
+                    <h2 className={`${lilita.className} text-[25px] font-bold m-6`}>My Orders</h2>
+                    <div className=''>
+                        {orders.length > 1 ? (
+                            <div className='flex flex-col gap-10 px-2'>
+                                {orders?.reverse().map((order, i) => {
+                                    return (
+                                        <div key={i} className='flex flex-col gap p-4 rounded-md bg-[#E7F0FD]'>
+                                            <div className='flex text-center gap-2 justify-between items-end font-bold mb-2'>
 
-                                <div key={i} className='flex flex-col gap-4 p-4 rounded-md bg-[#E7F0FD]'>
-                                    <div className='flex text-center gap-2 justify-between items-center font-bold'>
-
-                                        <div className=' text-[#313043]'>
-                                            Date: {moment(order[0]?.date_created).format('MMMM Do YYYY, h:mm a')}
-                                        </div>
-
-                                        <div className='text-[#313043] mt-[-15px]'>
-                                            Order No.: {order[0]?.order_number}
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-wrap rounded gap-4 capitalize text-[16px] font-semibold'>
-                                        {order?.map((singleOrder, id) => {
-                                            return (
-                                                <div>
-
-                                                    <Link href={`/product/${singleOrder?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-full max-w-[200px] lg:max-w-[250px] rounded-xl bg-[#ff9cbd]`}>
-                                                        <div>
-                                                            <img className='h-[50px] w-[50px]' src={singleOrder.addProduct.image} alt="" />
-                                                        </div>
-                                                        <div className='text-center'>
-                                                            {singleOrder?.addProduct.name}
-                                                        </div>
-                                                        <div>x</div>
-                                                        <div>
-                                                            {singleOrder?.quantity}
-                                                        </div>
-                                                    </Link>
+                                                <div className=' text-[#313043]'>
+                                                    Date: {moment(order[0]?.date_created).format('MMMM Do YYYY, h:mm a')}
                                                 </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div className='self-end text-[#313043] font-bold text-[20px]'>
-                                        Total ${order[0].total}
-                                    </div>
-                                </div>
-                            )
-                        })}
+
+                                                <div className='text-[#313043] mt-[-15px]'>
+                                                    Order No.: {order[0]?.order_number}
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-center sm:justify-start flex-wrap rounded gap-4 capitalize text-[16px] font-semibold'>
+                                                {order?.map((singleOrder, id) => {
+                                                    return (
+                                                        <div>
+
+                                                            <Link href={`/product/${singleOrder?.id}`} key={id} className={`${lilita.className} flex gap-2 justify-between items-center border-2 p-2 px-4 tracking-wider w-[200px] sm:w-full sm:max-w-[200px] lg:max-w-[250px] rounded-xl bg-[#ff9cbd]`}>
+                                                                <div>
+                                                                    <img className='h-[50px] w-[50px]' src={singleOrder.addProduct.image} alt="" />
+                                                                </div>
+                                                                <div className='text-center'>
+                                                                    {singleOrder?.addProduct.name}
+                                                                </div>
+                                                                <div>x</div>
+                                                                <div>
+                                                                    {singleOrder?.quantity}
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                            <div className='self-end text-[#313043] font-bold text-[20px]'>
+                                                Total ${order[0].total}
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        ) : (<div className='flex justify-center items-center flex-col'>
+                            <img src="/Assets/NoOrder.png" alt="" />
+                            <div className={`${lilita.className} text-[#313043] text-[20px] tracking-wider`}>No Available Orders</div>
+                        </div>)}
                     </div>
                 </div>
             </Container>
