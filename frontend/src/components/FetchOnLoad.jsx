@@ -11,6 +11,7 @@ const FetchOnLoad = () => {
     const dispatch = useDispatch();
 
     const fetchUserDataAccess = async () => {
+        console.log("ran user data access");
         const accessToken = Cookies.get('access');
         const refreshToken = Cookies.get('refresh');
         try {

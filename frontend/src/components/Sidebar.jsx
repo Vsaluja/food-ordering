@@ -12,6 +12,8 @@ import toast from 'react-hot-toast';
 import LoginShimmer from './shimmers/LoginShimmer';
 import { setInitialLoad } from '@/app/store/Category';
 import { MdAddAPhoto } from "react-icons/md";
+import { AiFillProduct } from "react-icons/ai";
+
 import EditProfilePic from './EditProfilePic';
 
 
@@ -80,19 +82,20 @@ const Sidebar = () => {
                                 <h2 className='font-bold capitalize text-[#313043] text-[18px] text-center'>Welcome Back, {user.user.first_name}</h2>
                             </div>
 
-                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3  font-bold rounded text-white cursor-pointer w-full max-w-[130px]'>
+                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3  font-bold rounded text-white cursor-pointer w-full max-w-[150px]'>
                                 <AiFillHome />
                                 <Link className='' href={`/`}>
                                     Home</Link>
                             </div>
 
-                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3 font-bold rounded text-white cursor-pointer w-full max-w-[130px]'>
-                                <IoMdSettings className='' />
+                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3 font-bold rounded text-white cursor-pointer w-full max-w-[150px]'>
+                                {/* <IoMdSettings className='' /> */}
+                                <AiFillProduct />
 
-                                <Link className='' href={`/`}>
-                                    Settings</Link>
+                                <Link className='' href={`/user/orders`}>
+                                    My Orders</Link>
                             </div>
-                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3 font-bold rounded text-white cursor-pointer w-full max-w-[130px]' onClick={handleLogout}>
+                            <div className='flex items-center justify-center gap-2 bg-[#313043] px-4 py-3 font-bold rounded text-white cursor-pointer w-full max-w-[150px]' onClick={handleLogout}>
                                 <IoLogOut />
                                 <Link className='' href={`/`}>
                                     Logout</Link>
