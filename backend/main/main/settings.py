@@ -32,7 +32,7 @@ DEBUG = True
 # None else can make request other than
 ALLOWED_HOSTS = [
     "127.0.0.1", "http://localhost:3000",
-    "https://food-ordering-gules-xi.vercel.app"
+    "https://food-ordering-production.up.railway.app"
 ]
 # ALLOWED_HOSTS = ["*"]
 
