@@ -82,6 +82,7 @@ const CartPage = () => {
                 toast.dismiss(load)
                 toast.success("Your order has been placed")
                 dispatch(setCart([]))
+                router.push('/user/orders')
             }, 3000);
         }
 
