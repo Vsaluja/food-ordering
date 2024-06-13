@@ -31,7 +31,7 @@ DEBUG = True
 
 # None else can make request other than
 ALLOWED_HOSTS = [
-    "127.0.0.1", "http://localhost:3000",
+    "localhost", "127.0.0.1", "http://localhost:3000",
     "food-ordering-production.up.railway.app"
 ]
 # ALLOWED_HOSTS = ["*"]
@@ -148,7 +148,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),  # Or your PostgreSQL server's IP address
-        'PORT': '5432',  # Default PostgreSQL port
+        'PORT': '26266',
     }
 }
 
